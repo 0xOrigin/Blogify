@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django_filters', # Django Filters
     'core.apps.CoreConfig',
     'authentication.apps.AuthenticationConfig',
+    'blog.apps.BlogConfig',
 ]
 
 if DEBUG:
