@@ -1,0 +1,8 @@
+# Versioning and metadata
+.git
+.gitignore
+.dockerignore
+
+# Environment variables
+*.env
+.env.temp
