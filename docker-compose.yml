@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:16.1-alpine
+    restart: always
+    user: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgresql:/docker-entrypoint-initdb.d/
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    networks:
+      - projectnetwork
+  django:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development # or production
+    restart: always
+    command: sh -c "python manage.py collectstatic --noinput &&
+              
+              python manage.py migrate &&
+              gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --reload"
+    volumes:
+      - ./backend:/home/app/backend
+      - static_volume:/home/app/backend/staticfiles
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres_db
+    links:
+      - postgres_db:postgres_db
+    networks:
+      - projectnetwork
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - static_volume:/home/app/backend/staticfiles
+    depends_on:
+      - django
+    links:
+      - django:django
+    networks:
+      - projectnetwork
+
+networks:
+  projectnetwork:
+      driver: bridge
+
+volumes:
+  postgres_data:
+  static_volume:
