@@ -42,8 +42,8 @@ class UserManager(BaseUserManager, BaseManager):
 class User(AbstractUser, BaseAuditModel, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True, blank=False, null=False)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'password']
     objects = UserManager()
 
     class Meta:

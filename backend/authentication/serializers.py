@@ -55,12 +55,7 @@ class BaseTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
 
         data['access_token'] = data.pop('access')
-        ROLE_SERIALIZERS = role_serializers_dict()
-        if self.user.role in ROLE_SERIALIZERS:
-            data[self.user.role] = ROLE_SERIALIZERS[self.user.role](self.user.role_object).data
-        else:
-            data['user'] = UserSerializer(self.user).data
-
+        data['user'] = UserSerializer(self.user).data
         return data
 
 
