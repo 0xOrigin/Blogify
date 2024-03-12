@@ -34,11 +34,7 @@ class UserSerializer(BaseSerializer):
     def create(self, validated_data):
         validated_data['email'] = BaseUserManager.normalize_email(validated_data['email'])
         validated_data['password'] = make_password(validated_data['password'])
-
-        with transaction.atomic():
-            instance = super().create(validated_data)
-            instance.groups.add(Group.objects.get(name=instance.role))
-        
+        instance = super().create(validated_data)
         return instance
 
     def get_name(self, obj):
