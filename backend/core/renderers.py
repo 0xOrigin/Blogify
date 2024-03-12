@@ -28,4 +28,4 @@ class BaseJSONRenderer(JSONRenderer):
             response['data'] = None
             response['error'] = data if data and isinstance(data, dict) or isinstance(data, list) else None
 
-        return super(BankJSONRenderer, self).render(response, accepted_media_type, renderer_context)
+        return super(BaseJSONRenderer, self).render(response, accepted_media_type, renderer_context)

@@ -5,7 +5,7 @@ class BaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = None
-        exclude = ('created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by')
+        exclude = ('created_at', 'updated_at', 'created_by', 'updated_by',)
 
     def create(self, validated_data):
         if self.Meta.model is None:
