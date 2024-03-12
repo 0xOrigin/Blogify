@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from core.models import BaseManager, BaseAuditModel
 
 
@@ -39,14 +39,8 @@ class UserManager(BaseUserManager, BaseManager):
         return user
 
 
-class User(AbstractBaseUser, BaseAuditModel, PermissionsMixin):
-    username = models.CharField(max_length=30, unique=True)
-    email = models.EmailField(max_length=100, unique=True)
-    first_name = models.CharField(max_length=40, blank=True, null=True)
-    last_name = models.CharField(max_length=50, blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+class User(AbstractUser, BaseAuditModel, PermissionsMixin):
+    email = models.EmailField(_("email address"), unique=True, blank=False, null=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password']
