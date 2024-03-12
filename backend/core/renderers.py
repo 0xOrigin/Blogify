@@ -9,7 +9,7 @@ class BaseJSONRenderer(JSONRenderer):
         status_code = int(renderer_context['response'].status_code)
 
         if status_code == status.HTTP_204_NO_CONTENT: # Do not return any data for 204 responses (delete)
-            return super(BankJSONRenderer, self).render(data, accepted_media_type, renderer_context)
+            return super(BaseJSONRenderer, self).render(data, accepted_media_type, renderer_context)
 
         response = {
             'status': True,
