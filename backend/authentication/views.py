@@ -44,19 +44,3 @@ class LogoutView(generics.GenericAPIView):
         response = Response(status=status.HTTP_200_OK)
         unset_jwt_cookies(response)
         return response
-
-
-class BaseAccountRegistrationViewSet(NonCreatableViewSet, BaseViewSet):
-    model = None
-    serializer_class = None
-
-    def perform_create(self, serializer):
-        serializer.save(created_by=None, created_at=timezone.now())
-    
-    @action(detail=False, methods=['post',], url_path='register', url_name='register', permission_classes=[])
-    def register(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
