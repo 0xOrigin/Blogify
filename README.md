@@ -19,3 +19,6 @@ A minimal Blog API written in (Python/Django)
 
 - The application should now be accessible through your web browser at the specified URL (often http://localhost/ or similar).
 
+## Additional Information
+  * API Reference: [Postman Collection](https://documenter.getpostman.com/view/24525817/2sA2xk1rVh)
+  * .env file example: [.env file](https://drive.google.com/file/d/1r3BgRmtzALpn5-0X2A6JiF3pePlYeSTY/view?usp=sharing)
