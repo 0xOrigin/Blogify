@@ -12,7 +12,6 @@ class PostViewSet(BaseViewSet):
     serializer_class = PostSerializer
     filterset_class = PostFilter
     permission_classes = [BlogPermissions,]
-    pagination_class = None
 
     def get_queryset(self):
         return super().get_queryset().select_related('author')
